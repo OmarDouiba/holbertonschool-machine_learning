@@ -847,4 +847,4 @@ alexa@ubuntu-xenial:0x00-linear_algebra$ ./102-main.py
 
 ## Authors
 
-- **Robinson Montes** - [mecomonteshbtn](https://github.com/mecomonteshbtn)
+- **omar douiba** - [DOUIBA OMAR](https://github.com/OmarDouiba)
