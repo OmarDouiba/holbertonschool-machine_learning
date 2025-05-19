@@ -845,6 +845,64 @@ alexa@ubuntu-xenial:0x00-linear_algebra$ ./102-main.py
 
 ---
 
+### What is a vector?
+
+A vector is a one-dimensional array that represents a quantity with both magnitude and direction.
+
+### What is a matrix?
+
+A matrix is a two-dimensional array of numbers arranged in rows and columns.
+
+### What is a transpose?
+
+The transpose of a matrix is obtained by flipping it over its diagonal, exchanging rows and columns.
+
+### What is the shape of a matrix?
+
+The shape of a matrix is a tuple indicating the number of rows and columns, e.g., (m, n).
+
+### What is an axis?
+
+An axis is a dimension in an array. For example, rows are axis=0 and columns are axis=1 in a 2D array.
+
+### What is a slice?
+
+A slice is a subset of an array obtained by specifying a range of indices.
+
+### How do you slice a vector/matrix?
+
+Use indexing and ranges:
+
+### For a vector: v[start:end]
+
+For a matrix: M[start_row:end_row, start_col:end_col]
+What are element-wise operations?
+Operations applied independently to each element of an array, like addition, multiplication, etc.
+
+### How do you concatenate vectors/matrices?
+
+Use functions like numpy.concatenate or numpy.vstack/hstack to combine arrays along a specified axis.
+
+### What is the dot product?
+
+The dot product is a scalar result of multiplying corresponding elements of two vectors and summing the products.
+
+### What is matrix multiplication?
+
+The operation combining rows of one matrix with columns of another to produce a new matrix.
+
+### What is Numpy?
+
+Numpy is a Python library for numerical computing, offering support for arrays, matrices, and mathematical operations.
+
+### What is parallelization and why is it important?
+
+Parallelization is executing multiple computations simultaneously, improving speed and efficiency in processing large data.
+
+### What is broadcasting?
+
+Broadcasting is Numpy's ability to perform element-wise operations on arrays of different shapes by automatically expanding them.
+
 ## Authors
 
 - **omar douiba** - [DOUIBA OMAR](https://github.com/OmarDouiba)
