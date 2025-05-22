@@ -33,6 +33,18 @@ alexa@ubuntu-xenial:0x00-linear_algebra$
 """
 
 def cat_matrices2D(mat1, mat2, axis=0):
+    """
+    Function that concatenates two matrices along a specific axis.
+
+    Parameters:
+    - mat1 (list of lists of ints/floats): 2D matrix to concatenate.
+    - mat2 (list of lists of ints/floats): 2D matrix to concatenate.
+    - axix (int): axis to concatenate.
+
+    Return:
+     A new matrix that concatenates the matices,
+     if the two matices cannot be concatenated, return None.
+    """
     if not mat1 or not mat2:
         return None
     
