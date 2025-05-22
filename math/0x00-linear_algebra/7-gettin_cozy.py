@@ -33,4 +33,18 @@ alexa@ubuntu-xenial:0x00-linear_algebra$
 """
 
 def cat_matrices2D(mat1, mat2, axis=0):
+    if not mat1 or not mat2:
+        return None
     
+    if axis == 0:
+        if len(mat1[0]) != len(mat2[0]):
+            return None
+        # row[:] creates a shallow copy of each row
+        # so changes to the original matrix won’t affect the new one.
+        return [row[:] for row in mat1] + [row[:] for row in mat2]
+    elif axis == 1:
+        if len(mat1) != len(mat2):
+            return None
+        return [(mat1[i] + mat2[i]) for i in range(len(mat1))]
+
+    return None
