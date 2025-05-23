@@ -83,3 +83,13 @@ class Neuron:
         Returns activation values
         """
         return self.__A
+    
+    def forward_prop(self, X):
+        """Calculates forward propagation using sigmoid activation"""
+        Z = np.dot(self.__W, X) + self.__b
+        self.__A = self.sigmoid(Z)
+        return self.__A
+
+    def sigmoid(self, Z):
+        """Sigmoid activation function"""
+        return 1 / (1 + np.exp(-Z))
