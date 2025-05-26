@@ -1,21 +1,19 @@
 #!/usr/bin/env python3
 """
-Write a class Neuron that defines a single neuron performing binary classification (Based on 1-neuron.py):
+Write a class Neuron that defines a single neuron performing binary classification (Based on 2-neuron.py):
 
-Add the public method def forward_prop(self, X):
-   Calculates the forward propagation of the neuron
-   X is a numpy.ndarray with shape (nx, m) that contains the input data
-       nx is the number of input features to the neuron
-       m is the number of examples
-   Updates the private attribute __A
-   The neuron should use a sigmoid activation function
-   Returns the private attribute __A
-alexa@ubuntu-xenial:$ cat 2-main.py
+Add the public method def cost(self, Y, A):
+   Calculates the cost of the model using logistic regression
+   Y is a numpy.ndarray with shape (1, m) that contains the correct labels for the input data
+   A is a numpy.ndarray with shape (1, m) containing the activated output of the neuron for each example
+   To avoid division by zero errors, please use 1.0000001 - A instead of 1 - A
+   Returns the cost
+alexa@ubuntu-xenial:$ cat 3-main.py
 #!/usr/bin/env python3
 
 import numpy as np
 
-Neuron = __import__('2-neuron').Neuron
+Neuron = __import__('3-neuron').Neuron
 
 lib_train = np.load('../data/Binary_Train.npz')
 X_3D, Y = lib_train['X'], lib_train['Y']
@@ -23,14 +21,11 @@ X = X_3D.reshape((X_3D.shape[0], -1)).T
 
 np.random.seed(0)
 neuron = Neuron(X.shape[0])
-neuron._Neuron__b = 1
 A = neuron.forward_prop(X)
-if (A is neuron.A):
-        print(A)
-vagrant@ubuntu-xe
-alexa@ubuntu-xenial:$ ./2-main.py
-[[5.34775247e-10 7.24627778e-04 4.52416436e-07 ... 8.75691930e-05
-  1.13141966e-06 6.55799932e-01]]
+cost = neuron.cost(Y, A)
+print(cost)
+alexa@ubuntu-xenial:$ ./3-main.py
+4.365104944262272
 alexa@ubuntu-xenial:$
 """
 import numpy as np
@@ -61,6 +56,7 @@ class Neuron:
         self.__W = np.random.normal(size=(1, nx))
         self.__b = 0
         self.__A = 0
+        
 
     @property
     def W(self):
@@ -112,4 +108,20 @@ class Neuron:
         Return:
         The private attribute A
         """
-        return 1 / (1 + np.exp(-Z))
+        y_hat = 1 / (1 + np.exp(-Z))
+        return y_hat
+    
+    def cost(self, Y, A):
+        """
+        Calculates the cost of the model using logistic regression
+        Arguments:
+         - Y (numpy.ndarray): is a numpy.ndarray with shape (1, m) that
+           contains the correct labels for the input data
+         - A is a numpy.ndarray with shape (1, m) containing the activated
+           output of the neuron for each example
+        Returns:
+         The cost
+        """
+        m = Y.shape[1]
+        cost = - (1/m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
+        return cost

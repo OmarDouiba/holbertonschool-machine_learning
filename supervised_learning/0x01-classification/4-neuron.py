@@ -1,37 +1,16 @@
 #!/usr/bin/env python3
 """
-Write a class Neuron that defines a single neuron performing binary classification (Based on 1-neuron.py):
+Write a class Neuron that defines a single neuron performing binary classification (Based on 3-neuron.py):
 
-Add the public method def forward_prop(self, X):
-   Calculates the forward propagation of the neuron
+Add the public method def evaluate(self, X, Y):
+   Evaluates the neuron’s predictions
    X is a numpy.ndarray with shape (nx, m) that contains the input data
        nx is the number of input features to the neuron
        m is the number of examples
-   Updates the private attribute __A
-   The neuron should use a sigmoid activation function
-   Returns the private attribute __A
-alexa@ubuntu-xenial:$ cat 2-main.py
-#!/usr/bin/env python3
-
-import numpy as np
-
-Neuron = __import__('2-neuron').Neuron
-
-lib_train = np.load('../data/Binary_Train.npz')
-X_3D, Y = lib_train['X'], lib_train['Y']
-X = X_3D.reshape((X_3D.shape[0], -1)).T
-
-np.random.seed(0)
-neuron = Neuron(X.shape[0])
-neuron._Neuron__b = 1
-A = neuron.forward_prop(X)
-if (A is neuron.A):
-        print(A)
-vagrant@ubuntu-xe
-alexa@ubuntu-xenial:$ ./2-main.py
-[[5.34775247e-10 7.24627778e-04 4.52416436e-07 ... 8.75691930e-05
-  1.13141966e-06 6.55799932e-01]]
-alexa@ubuntu-xenial:$
+   Y is a numpy.ndarray with shape (1, m) that contains the correct labels for the input data
+   Returns the neuron’s prediction and the cost of the network, respectively
+       The prediction should be a numpy.ndarray with shape (1, m) containing the predicted labels for each example
+       The label values should be 1 if the output of the network is >= 0.5 and 0 otherwise
 """
 import numpy as np
 
@@ -61,6 +40,7 @@ class Neuron:
         self.__W = np.random.normal(size=(1, nx))
         self.__b = 0
         self.__A = 0
+        
 
     @property
     def W(self):
@@ -112,4 +92,40 @@ class Neuron:
         Return:
         The private attribute A
         """
-        return 1 / (1 + np.exp(-Z))
+        y_hat = 1 / (1 + np.exp(-Z))
+        return y_hat
+    
+    def cost(self, Y, A):
+        """
+        Calculates the cost using logistic regression loss (cross-entropy)
+
+        Parameters:
+        - Y: numpy.ndarray of shape (1, m), true labels
+        - A: numpy.ndarray of shape (1, m), predicted activations from sigmoid
+
+        Returns:
+        - cost: float, the logistic regression cost
+        """
+        m = Y.shape[1]
+        cost = - (1/m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
+        return cost
+
+    def evaluate(self, X, Y):
+        """
+        Evaluates the neuron's predictions
+
+        Parameters:
+        - X: numpy.ndarray of shape (nx, m), input data
+        - Y: numpy.ndarray of shape (1, m), true labels
+
+        Returns:
+        - A tuple: (prediction, cost)
+        - prediction: numpy.ndarray of shape (1, m) with predicted labels (0 or 1)
+        - cost: float, the cost of the network
+        """
+
+        A = self.forward_prop(X)
+        cost = self.cost(Y, A)
+        return np.where(A >= 0.5, 1, 0) , cost
+    
+        
